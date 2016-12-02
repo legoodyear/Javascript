@@ -5,10 +5,10 @@
  * GistID: 5705453
  *
  */
-(function (document, $) {
+(function (document, jQuery) {
     "use strict";
 
-    var flickrPhotoStream = function ($el, options) {
+    var flickrPhotoStream = function (jQueryel, options) {
         var url = [
             'http://api.flickr.com/services/feeds/photoset.gne?nsid=',
             options.id,
@@ -17,13 +17,13 @@
             '&format=json&jsoncallback=?'
         ].join('');
 
-        return $.getJSON(url).done(function (data) {
-            $.each(data.items, function (index, item) {
+        return jQuery.getJSON(url).done(function (data) {
+            jQuery.each(data.items, function (index, item) {
                 var link = item.media.m.replace('_m', '_b');
 
-                $("<img />")
+                jQuery("<img />")
                     .attr("src", item.media.m)
-                    .appendTo($el)
+                    .appendTo(jQueryel)
                     .wrap(options.container || '')
                     .wrap([
                         '<a data-lightbox="true" href="',
@@ -37,7 +37,7 @@
         });
     };
 
-    $.fn.flickrPhotoStream = function (options) {
-        return flickrPhotoStream($(this).get(), options || {});
+    jQuery.fn.flickrPhotoStream = function (options) {
+        return flickrPhotoStream(jQuery(this).get(), options || {});
     };
 })(document, jQuery);
